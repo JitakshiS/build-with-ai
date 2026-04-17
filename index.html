@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build with AI – Hands-On AI Building Experiences for Teams | Jitakshi</title>
+<meta name="description" content="Give your team hands-on AI building experience. Led by Anthropic's Claude Ambassador. From 2-hour sessions to 4-week sprints.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f8f8f8;
+    --gray-100: #f3f3f3;
+    --gray-200: #e4e4e4;
+    --gray-300: #d0d0d0;
+    --gray-400: #999;
+    --gray-500: #666;
+    --gray-600: #444;
+    --gray-700: #333;
+    --accent: #c8ff00;
+    --accent-dark: #a8d600;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  p { text-wrap: pretty; }
+  h1,h2,h3,h4 { text-wrap: balance; }
+
+  /* ==================== */
+  /* HERO                 */
+  /* ==================== */
+
+  .hero {
+    background: var(--black);
+    color: var(--white);
+    padding: 100px 40px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(200, 255, 0, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(200, 255, 0, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(200, 255, 0, 0.15);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    border: 1px solid rgba(200, 255, 0, 0.2);
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5.5vw, 56px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero h1 .highlight {
+    color: var(--accent);
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+  .hero-cta {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 16px 40px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .hero-cta:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+  }
+  .hero-proof {
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .hero-proof .proof-item {
+    text-align: center;
+  }
+  .hero-proof .proof-number {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+  .hero-proof .proof-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* ==================== */
+  /* SECTIONS (shared)    */
+  /* ==================== */
+
+  section {
+    padding: 80px 40px;
+  }
+  .section-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gray-400);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--gray-500);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  /* ==================== */
+  /* PROBLEM / SOLUTION   */
+  /* ==================== */
+
+  .problem {
+    background: var(--off-white);
+  }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .problem-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .problem-card .card-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  .problem-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .problem-card p {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+  .problem-card.dark {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+  .problem-card.dark p { color: #bbb; }
+
+  /* ==================== */
+  /* PRICING TIERS        */
+  /* ==================== */
+
+  .pricing {
+    background: var(--white);
+  }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .tier-card {
+    border: 1.5px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 36px 28px;
+    background: var(--white);
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  .tier-card:hover {
+    border-color: var(--gray-300);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+  .tier-card.featured {
+    border-color: var(--black);
+    border-width: 2px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+  .tier-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--black);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 4px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .tier-name {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    margin-bottom: 12px;
+  }
+  .tier-price {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 4px;
+  }
+  .tier-format {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .tier-capacity {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-bottom: 24px;
+  }
+  .tier-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin-bottom: 24px;
+  }
+  .tier-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tier-features li {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .tier-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .tier-cta {
+    display: block;
+    width: 100%;
+    margin-top: 28px;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+  .tier-cta.primary {
+    background: var(--black);
+    color: var(--white);
+  }
+  .tier-cta.primary:hover {
+    background: #222;
+  }
+  .tier-cta.secondary {
+    background: var(--gray-100);
+    color: var(--black);
+  }
+  .tier-cta.secondary:hover {
+    background: var(--gray-200);
+  }
+  .pricing-note {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 14px;
+    color: var(--gray-500);
+  }
+  .pricing-note a {
+    color: var(--black);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ==================== */
+  /* HOW IT WORKS         */
+  /* ==================== */
+
+  .how-it-works {
+    background: var(--off-white);
+  }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .step-card {
+    text-align: center;
+    padding: 32px 24px;
+  }
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--black);
+    color: var(--accent);
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
+  .step-card h3 {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .step-card p {
+    font-size: 14px;
+    color: var(--gray-500);
+    line-height: 1.65;
+  }
+
+  /* ==================== */
+  /* PROOF / RESULTS      */
+  /* ==================== */
+
+  .results {
+    background: var(--black);
+    color: var(--white);
+  }
+  .results .section-label { color: var(--accent); }
+  .results .section-subtitle { color: #888; }
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .result-card {
+    text-align: center;
+    padding: 24px 16px;
+  }
+  .result-number {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .result-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* ==================== */
+  /* TESTIMONIALS         */
+  /* ==================== */
+
+  .testimonials {
+    background: var(--white);
+  }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .testimonial-card {
+    background: var(--off-white);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .testimonial-quote {
+    font-size: 15px;
+    color: var(--gray-700);
+    line-height: 1.75;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-500);
+  }
+  .testimonial-name {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .testimonial-role {
+    font-size: 12px;
+    color: var(--gray-400);
+  }
+
+  /* ==================== */
+  /* LOGOS                */
+  /* ==================== */
+
+  .logos {
+    background: var(--off-white);
+    padding: 48px 40px;
+  }
+  .logos-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .logos-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gray-400);
+    margin-bottom: 24px;
+  }
+  .logo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px 40px;
+    align-items: center;
+  }
+  .logo-grid span {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-300);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* ==================== */
+  /* ABOUT / CREDIBILITY  */
+  /* ==================== */
+
+  .about {
+    background: var(--white);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 48px;
+    max-width: 800px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .about-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .credential-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--off-white);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+  .credential-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--black);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .credential-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    line-height: 1.4;
+  }
+  .credential-text span {
+    display: block;
+    font-size: 11px;
+    color: var(--gray-400);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .about-story p {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .about-story strong { color: var(--black); }
+
+  /* ==================== */
+  /* EVENT GALLERY        */
+  /* ==================== */
+
+  .gallery {
+    background: var(--white);
+    padding: 80px 40px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .gallery-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-grid .gallery-wide {
+    grid-column: span 2;
+    min-height: 260px;
+  }
+  .gallery-grid .gallery-single {
+    min-height: 260px;
+  }
+
+  /* ==================== */
+  /* HEADSHOT IN ABOUT    */
+  /* ==================== */
+
+  .about-headshot {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* ==================== */
+  /* TESTIMONIAL SCREENSHOTS */
+  /* ==================== */
+
+  .testimonial-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .screenshot-card {
+    background: #fff;
+    border: 1px solid #e4e4e4;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .screenshot-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .screenshot-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .screenshot-card .sc-highlight {
+    padding: 14px 18px;
+    border-top: 1px solid #f0f0f0;
+    font-size: 12px;
+    color: var(--gray-500);
+    line-height: 1.5;
+  }
+  .screenshot-card .sc-highlight strong {
+    color: var(--black);
+    font-weight: 700;
+  }
+  .screenshot-card.featured-screenshot {
+    grid-column: span 2;
+  }
+  .screenshot-card.featured-screenshot img {
+    max-height: none;
+  }
+
+  /* ==================== */
+  /* LOGO IMAGE           */
+  /* ==================== */
+
+  .logo-image {
+    max-width: 100%;
+    height: auto;
+    opacity: 0.7;
+  }
+
+  /* ==================== */
+  /* FAQ                  */
+  /* ==================== */
+
+  .faq {
+    background: var(--off-white);
+  }
+  .faq-list {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--gray-200);
+    padding: 24px 0;
+  }
+  .faq-item:first-child { border-top: 1px solid var(--gray-200); }
+  .faq-q {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .faq-a {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  /* ==================== */
+  /* CTA FINAL            */
+  /* ==================== */
+
+  .final-cta {
+    background: var(--black);
+    color: var(--white);
+    padding: 100px 40px;
+    text-align: center;
+  }
+  .final-cta h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .final-cta p {
+    font-size: 16px;
+    color: #888;
+    max-width: 500px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+  .final-cta .hero-cta {
+    font-size: 16px;
+    padding: 18px 48px;
+  }
+
+  /* ==================== */
+  /* FOOTER               */
+  /* ==================== */
+
+  footer {
+    background: var(--black);
+    border-top: 1px solid #222;
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer .footer-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  footer .footer-name span {
+    color: var(--gray-400);
+    font-weight: 400;
+  }
+  footer .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+  footer .footer-links a {
+    font-size: 13px;
+    color: var(--gray-400);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  footer .footer-links a:hover { color: var(--white); }
+
+  /* ==================== */
+  /* RESPONSIVE           */
+  /* ==================== */
+
+  @media (max-width: 768px) {
+    section { padding: 60px 24px; }
+    .hero { padding: 80px 24px 60px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .tier-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .steps-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .screenshot-grid { grid-template-columns: 1fr; }
+    .screenshot-card.featured-screenshot { grid-column: span 1; }
+    .about-grid { grid-template-columns: 1fr; }
+    .hero-proof { gap: 32px; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-grid .gallery-wide { grid-column: span 1; min-height: 200px; }
+    .gallery-grid .gallery-single { min-height: 200px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== -->
+  <!-- HERO                 -->
+  <!-- ==================== -->
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Led by Anthropic's Claude Ambassador</div>
+      <h1>Your team builds<br><span class="highlight">real software with AI.</span><br>In one day.</h1>
+      <p class="subtitle">Hands-on AI building experiences for corporate teams, accelerators, and universities. Not a lecture. Not a demo. Your people actually build and ship.</p>
+      <a href="#book" class="hero-cta">Book a Discovery Call</a>
+      <div class="hero-proof">
+        <div class="proof-item">
+          <div class="proof-number">100+</div>
+          <div class="proof-label">People Have Shipped</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-number">8+</div>
+          <div class="proof-label">Organizations Partnered</div>
+        </div>
+      </div>
+      <div style="margin-top: 32px; font-size: 13px; color: #666; letter-spacing: 0.5px;">Partnered with Shopify, YWCA, Volta, Lovable, v0, Onside, Claude Code</div>
+    </div>
+  </div>
+
+  <!-- ==================== -->
+  <!-- PROBLEM / SOLUTION   -->
+  <!-- ==================== -->
+
+  <section class="problem">
+    <div class="section-inner">
+      <div class="section-label">The Gap</div>
+      <h2 class="section-title">There's a gap between learning about AI and building with AI.</h2>
+      <p class="section-subtitle">Most teams have done the briefings. The next step is giving your people tools to actually build.</p>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="card-icon" style="font-size: 20px; color: var(--gray-400);">01</div>
+          <h3>Learning about AI</h3>
+          <p>Presentations, strategy briefings, prompt tips. Useful for context, but it doesn't change what your team can do on Monday.</p>
+        </div>
+        <div class="problem-card">
+          <div class="card-icon" style="font-size: 20px; color: var(--gray-400);">02</div>
+          <h3>Building with AI</h3>
+          <p>Your team uses AI tools to build a working prototype that solves a real problem. They leave with a deployed product and the skills to keep going.</p>
+        </div>
+        <div class="problem-card dark" style="grid-column: span 2;">
+          <div class="card-icon" style="color: var(--accent);">*</div>
+          <h3 style="color: var(--accent);">That's what we do.</h3>
+          <p>I help teams cross that gap. Marketing, ops, product, business – anyone can build real software using AI tools like Claude Code and Lovable. No prior technical experience needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== -->
+  <!-- EVENT GALLERY        -->
+  <!-- ==================== -->
+
+  <div class="gallery">
+    <div class="section-inner" style="text-align: center;">
+      <div class="section-label">See It in Action</div>
+      <h2 class="section-title" style="margin-bottom: 32px;">Real sessions. Real people. Real energy.</h2>
+    </div>
+    <div class="gallery-grid">
+      <img class="gallery-wide" src="landing-page-images/event-claude-code-2.jpg" alt="Claude Code event – Jitakshi presenting to a full room at Volta">
+      <img class="gallery-single" src="landing-page-images/event-v0-vercel.jpg" alt="v0 by Vercel event – group photo with v0 branding">
+      <img class="gallery-single" src="landing-page-images/event-cursor-hack.jpeg" alt="Cursor Hack Day at Volta">
+      <img class="gallery-wide" src="landing-page-images/event-hackathon-group.jpeg" alt="AI Hackathon – participants at Volta">
+    </div>
+  </div>
+
+  <!-- ==================== -->
+  <!-- PROOF / RESULTS      -->
+  <!-- ==================== -->
+
+  <section class="results">
+    <div class="section-inner">
+      <div class="section-label">Proven Results</div>
+      <h2 class="section-title" style="color: var(--white);">This isn't theoretical.</h2>
+      <p class="section-subtitle">Real numbers from real sessions with real non-technical participants.</p>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="result-number">100+</div>
+          <div class="result-label">Non-technical people have shipped</div>
+        </div>
+        <div class="result-card">
+          <div class="result-number">1</div>
+          <div class="result-label">Day to build and deploy</div>
+        </div>
+        <div class="result-card">
+          <div class="result-number">8+</div>
+          <div class="result-label">Events and sprints delivered</div>
+        </div>
+        <div class="result-card">
+          <div class="result-number">6</div>
+          <div class="result-label">Partners including Shopify, Lovable, and YWCA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== -->
+  <!-- HOW IT WORKS         -->
+  <!-- ==================== -->
+
+  <section class="how-it-works">
+    <div class="section-inner">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Simple process. Real outcomes.</h2>
+      <p class="section-subtitle">From first call to your team shipping software.</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Discovery Call</h3>
+          <p>15 minutes. We talk about your team, their AI exposure, and what they'd build. I recommend the right format.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Pick Your Format</h3>
+          <p>2-hour Spark, full-day Intensive, or 4-week Transformation. Each one ends with something your team built and deployed.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Your Team Builds</h3>
+          <p>I guide them hands-on with AI tools. They don't watch. They build. They leave with working software and the skills to keep going.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== -->
+  <!-- PRICING              -->
+  <!-- ==================== -->
+
+  <section class="pricing" id="pricing">
+    <div class="section-inner">
+      <div class="section-label">Formats</div>
+      <h2 class="section-title">Choose your format.</h2>
+      <p class="section-subtitle">Every format ends with your team having built something real. The difference is depth and duration.</p>
+
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-name">Spark</div>
+          <div class="tier-price" style="font-size: 28px;">2 Hours</div>
+          <div class="tier-format">10-40 participants</div>
+          <div class="tier-capacity">Best for: first exposure, team-wide kickoff</div>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li>Hands-on AI Builder Experience</li>
+            <li>Live demo: building an app in real-time</li>
+            <li>Participants build their first project</li>
+            <li>AI tool landscape overview</li>
+          </ul>
+          <a href="#book" class="tier-cta secondary">Let's Talk</a>
+        </div>
+
+        <div class="tier-card featured">
+          <div class="tier-name">Intensive</div>
+          <div class="tier-price" style="font-size: 28px;">Full Day</div>
+          <div class="tier-format">10-30 participants</div>
+          <div class="tier-capacity">Best for: team upskilling, deployed outcomes</div>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li>Everything in Spark, plus:</li>
+            <li>Each participant builds and deploys a working tool</li>
+            <li>Claude Code + Lovable deep-dive</li>
+            <li>AI Builder Toolkit (guides, templates, prompts)</li>
+            <li>30-day post-session support</li>
+          </ul>
+          <a href="#book" class="tier-cta primary">Let's Talk</a>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-name">Transformation</div>
+          <div class="tier-price" style="font-size: 28px;">4 Weeks</div>
+          <div class="tier-format">10-20 participants</div>
+          <div class="tier-capacity">Best for: production-ready tools, deep capability</div>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li>Everything in Intensive, plus:</li>
+            <li>4 weekly sessions + office hours</li>
+            <li>Build tools for real business use cases</li>
+            <li>1:1 support and code reviews</li>
+            <li>Deployment to production</li>
+            <li>Executive readout on team capabilities</li>
+            <li>60-day post-sprint support</li>
+          </ul>
+          <a href="#book" class="tier-cta secondary">Let's Talk</a>
+        </div>
+      </div>
+
+      <p class="pricing-note">Pricing depends on team size, format, and organization type. <a href="#book">Book a call and we'll figure out what works.</a></p>
+    </div>
+  </section>
+
+  <!-- ==================== -->
+  <!-- TESTIMONIALS         -->
+  <!-- ==================== -->
+
+  <section class="testimonials">
+    <div class="section-inner">
+      <div class="section-label">What People Say</div>
+      <h2 class="section-title">Real comments. Real LinkedIn profiles.</h2>
+      <p class="section-subtitle">Straight from the people who were in the room.</p>
+
+      <div class="screenshot-grid">
+        <div class="screenshot-card">
+          <img src="landing-page-images/SCR-20260417-llwv.png" alt="LinkedIn comment from Primrose Ruvini Watson">
+          <div class="sc-highlight"><strong>Primrose Ruvini Watson</strong> – Corporate Re-Org Lawyer. Built her product in the Volta sprint.</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="landing-page-images/linkedin-govind-talluri.png" alt="LinkedIn comment from Govind Talluri">
+          <div class="sc-highlight"><strong>Govind Talluri</strong> – International Growth Strategist. Built and demoed an app in one session.</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="landing-page-images/SCR-20251225-mmwg.png" alt="LinkedIn comment from Natalie Mannion, Product at Shopify">
+          <div class="sc-highlight"><strong>Natalie Mannion</strong> – Product at Shopify. Event sponsor.</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="landing-page-images/linkedin-caroline-vercel.png" alt="LinkedIn comment from Caroline Ciaramitaro, Community at Vercel">
+          <div class="sc-highlight"><strong>Caroline Ciaramitaro</strong> – Community @ Vercel. Partner.</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="landing-page-images/SCR-20251225-mmzw.png" alt="LinkedIn comment from Thauana Morais">
+          <div class="sc-highlight"><strong>Thauana Morais</strong> – UN CSW Delegate, G20 YEA Delegate. Hackathon collaborator.</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="landing-page-images/SCR-20260417-lloc.png" alt="LinkedIn recommendation from Yuhan Fu">
+          <div class="sc-highlight"><strong>Yuhan Fu</strong> – MCS @ Dalhousie University. LinkedIn recommendation.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== -->
+  <!-- LOGOS                -->
+  <!-- ==================== -->
+
+  <div class="logos">
+    <div class="logos-inner">
+      <div class="logos-label">8 Years Executing for Global Brands</div>
+      <img class="logo-image" src="landing-page-images/company-logos-dark.png" alt="Client logos: Claude, Shopify, Lovable, Google, Meta, Netflix, YouTube, Audi, YWCA, Volta, Havas, Estee Lauder, and more">
+    </div>
+  </div>
+
+  <!-- ==================== -->
+  <!-- ABOUT                -->
+  <!-- ==================== -->
+
+  <section class="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-credentials">
+          <div class="credential-badge">
+            <div class="credential-icon">A</div>
+            <div class="credential-text">
+              Claude Ambassador
+              <span>Appointed by Anthropic</span>
+            </div>
+          </div>
+          <div class="credential-badge">
+            <div class="credential-icon">V</div>
+            <div class="credential-text">
+              Volta Sprint Facilitator
+              <span>Atlantic Canada's Innovation Hub</span>
+            </div>
+          </div>
+          <div class="credential-badge">
+            <div class="credential-icon">W</div>
+            <div class="credential-text">
+              YWCA Workshop Lead
+              <span>AI for Entrepreneurs</span>
+            </div>
+          </div>
+          <div class="credential-badge">
+            <div class="credential-icon">H</div>
+            <div class="credential-text">
+              Hackathon Organizer
+              <span>Lovable Halifax AI Hackathon</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-story">
+          <img class="about-headshot" src="landing-page-images/headshot.jpeg" alt="Jitakshi Sharma">
+          <h2 style="font-size: 28px; font-weight: 900; letter-spacing: -1px; margin-bottom: 20px;">Hi, I'm Jitakshi.</h2>
+          <p>I create experiences where people actually ship. Over the past year, 100+ people have built and deployed real software in my sessions – partnered with Shopify, YWCA, Volta, Lovable, v0, Onside, and Claude Code.</p>
+          <p>Before this, I spent <strong>8 years executing for brands like Google, Meta, Netflix, and Audi</strong> – managing $3M+ in budgets across 100+ projects. I bring that enterprise rigor to every session I run.</p>
+          <p>I'm Anthropic's official Claude Ambassador for Atlantic Canada. This is what I do full-time: <strong>help teams build real things with AI.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== -->
+  <!-- FAQ                  -->
+  <!-- ==================== -->
+
+  <section class="faq">
+    <div class="section-inner">
+      <div class="section-label">Questions</div>
+      <h2 class="section-title">Common questions.</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">What will my team actually build?</div>
+          <div class="faq-a">Real, working software. Internal tools, client-facing prototypes, dashboards, automations. In the Spark format, everyone builds a starter project. In the Intensive and Transformation formats, they build tools for actual business use cases your team identifies.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does my team need technical experience?</div>
+          <div class="faq-a">No. These sessions are designed for non-technical teams. AI tools handle the technical complexity – your team focuses on what to build, not how to code it. I've run this with people who have never written a line of code.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How is this different from AI training we've already done?</div>
+          <div class="faq-a">Most AI training is presentations and prompt tips. This is hands-on building. Your team doesn't watch someone use AI – they build working software themselves and leave with deployed projects they can actually use.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can this be done virtually?</div>
+          <div class="faq-a">Yes. In-person is ideal for the full-day and 4-week formats. Virtual works well for the 2-hour Spark format and for distributed teams.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What do participants need?</div>
+          <div class="faq-a">A laptop and a Claude Code subscription (~$20/month). I provide setup guides before the session and walk everyone through the tools on day one. No pre-work required.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== -->
+  <!-- FINAL CTA            -->
+  <!-- ==================== -->
+
+  <div class="final-cta" id="book">
+    <h2>Ready to give your team<br>real AI building skills?</h2>
+    <p>Book a free 15-minute discovery call. We'll talk about your team, explore formats, and figure out if this is a fit.</p>
+    <a href="https://cal.com/jitakshi/30min" class="hero-cta">Book a Discovery Call</a>
+  </div>
+
+  <!-- ==================== -->
+  <!-- FOOTER               -->
+  <!-- ==================== -->
+
+  <footer>
+    <div class="footer-name">Jitakshi Sharma <span>/ Claude Ambassador, Anthropic</span></div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/jitakshi/" target="_blank">LinkedIn</a>
+      <a href="https://women-in-ai-jitakshi.vercel.app/" target="_blank">Community</a>
+      <a href="mailto:creativej.me@gmail.com">Email</a>
+    </div>
+  </footer>
+
+</body>
+</html>
